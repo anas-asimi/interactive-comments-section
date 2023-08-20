@@ -6,7 +6,9 @@ function Comment({
 	createdAt,
 	currentUserName,
 	replies,
+	id,
 }) {
+	console.log(id, currentUserName, user.name);
 	return (
 		<div className="comment-container">
 			<div className="comment">
@@ -28,11 +30,33 @@ function Comment({
 							)}
 						</p>
 						<p className="createdAt">{createdAt}</p>
+						{currentUserName == user.username && (
+							<>
+								<button className="button-secondary delete">
+									<img
+										src="/icon-delete.svg"
+										alt="delete"
+										size="12px"
+										width="12px"
+									/>
+									delete
+								</button>
+								<button className="button-secondary">
+									<img
+										src="/icon-edit.svg"
+										alt="edit"
+										size="12px"
+										width="12px"
+									/>
+									edit
+								</button>
+							</>
+						)}
 						<button className="button-secondary">
 							<img
 								src="/icon-reply.svg"
 								alt="reply"
-								height="12px"
+								size="12px"
 								width="12px"
 							/>
 							reply
@@ -49,7 +73,7 @@ function Comment({
 							<Comment
 								key={reply.id}
 								{...reply}
-								currentUserName={user.username}
+								currentUserName={currentUserName}
 							/>
 						))}
 					</div>
