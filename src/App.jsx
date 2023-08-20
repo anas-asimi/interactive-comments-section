@@ -42,7 +42,7 @@ function App() {
 						id="add-comment"
 						label="add-comment"
 						title="add-comment"
-						rows="5"
+						rows="4"
 					></textarea>
 					<button type="submit" className="button-primary">
 						send
