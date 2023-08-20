@@ -141,6 +141,8 @@ body {
 }
 /* secondary button */
 .button-secondary {
+	display: flex;
+	align-items: center;
 	background-color: transparent;
 	outline: none;
 	border: none;
@@ -151,5 +153,8 @@ body {
 	text-transform: capitalize;
 	img {
 		margin-right: 8px;
+	}
+	&.delete{
+		color: var(--soft-red);
 	}
 }

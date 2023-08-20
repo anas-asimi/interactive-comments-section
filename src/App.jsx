@@ -14,7 +14,6 @@ function App() {
 				setUser(data.currentUser);
 			});
 	}, []);
-	console.log(comments && comments[0]);
 	return (
 		<>
 			<section className="comment-section">
