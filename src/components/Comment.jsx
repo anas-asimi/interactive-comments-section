@@ -1,14 +1,8 @@
 /* eslint-disable react/prop-types */
-function Comment({
-	score,
-	content,
-	user,
-	createdAt,
-	currentUserName,
-	replies,
-	id,
-}) {
-	console.log(id, currentUserName, user.name);
+import { useSelector } from "react-redux";
+
+function Comment({ score, content, user, createdAt, replies }) {
+	const { currentUser } = useSelector((state) => state.user);
 	return (
 		<div className="comment-container">
 			<div className="comment">
@@ -25,12 +19,12 @@ function Comment({
 						</div>
 						<p className="username">
 							{user.username}
-							{currentUserName == user.username && (
+							{currentUser.username == user.username && (
 								<span className="you">you</span>
 							)}
 						</p>
 						<p className="createdAt">{createdAt}</p>
-						{currentUserName == user.username && (
+						{currentUser.username == user.username && (
 							<>
 								<button className="button-secondary delete">
 									<img
@@ -73,7 +67,6 @@ function Comment({
 							<Comment
 								key={reply.id}
 								{...reply}
-								currentUserName={currentUserName}
 							/>
 						))}
 					</div>
