@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
+import { removeComment } from "../redux/comments.js";
+import { useDispatch } from "react-redux";
 
-function Comment({ score, content, user, createdAt, replies }) {
-	const { currentUser } = useSelector((state) => state.user);
+function Comment({ score, content, user, createdAt, replies, path }) {
+	const { currentUser } = useSelector((state) => state.userSlice);
+	const dispatch = useDispatch();
 	return (
 		<div className="comment-container">
 			<div className="comment">
@@ -26,7 +29,12 @@ function Comment({ score, content, user, createdAt, replies }) {
 						<p className="createdAt">{createdAt}</p>
 						{currentUser.username == user.username && (
 							<>
-								<button className="button-secondary delete">
+								<button
+									className="button-secondary delete"
+									onClick={() => {
+										dispatch(removeComment({path}));
+									}}
+								>
 									<img
 										src="/icon-delete.svg"
 										alt="delete"
@@ -64,10 +72,7 @@ function Comment({ score, content, user, createdAt, replies }) {
 					<div className="line"></div>
 					<div className="replies">
 						{replies.map((reply) => (
-							<Comment
-								key={reply.id}
-								{...reply}
-							/>
+							<Comment key={reply.id} {...reply} />
 						))}
 					</div>
 				</div>
