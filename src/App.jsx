@@ -1,23 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Comment from "./components/Comment.jsx";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "./redux/user.js";
-import { addComment } from "./redux/comments.js";
+import { useSelector } from "react-redux";
+import initializedata from "./utils.js";
 import "./App.css";
 
 function App() {
-	const { currentUser } = useSelector((state) => state.user);
-	const comments = useSelector((state) => state.comments);
-	const dispatch = useDispatch();
+	const { currentUser } = useSelector((state) => state.userSlice);
+	const { comments } = useSelector((state) => state.commentsSlice);
+	console.log(comments);
 
-	useEffect(() => {
-		fetch("/data.json")
-			.then((res) => res.json())
-			.then((data) => {
-				data.comments.forEach((comment) => dispatch(addComment(comment)));
-				dispatch(addUser(data.currentUser));
-			});
-	}, []);
+	useEffect(initializedata, []);
 
 	return (
 		<>
@@ -25,10 +18,7 @@ function App() {
 				<div className="comments">
 					{comments &&
 						comments.map((comment) => (
-							<Comment
-								key={comment.id}
-								{...comment}
-							/>
+							<Comment key={comment.id} {...comment} />
 						))}
 				</div>
 				{currentUser && (
