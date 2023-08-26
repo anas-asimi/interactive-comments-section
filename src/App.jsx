@@ -8,8 +8,7 @@ import "./App.css";
 function App() {
 	const { currentUser } = useSelector((state) => state.userSlice);
 	const { comments } = useSelector((state) => state.commentsSlice);
-	console.log(comments);
-
+	// console.log(comments);
 	useEffect(initializedata, []);
 
 	return (

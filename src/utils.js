@@ -13,7 +13,7 @@ export default function initializedata() {
 
 function addCommentRecursively(comment) {
 	if (!comment?.path) {
-		comment.path = `${comment.id}`
+		comment.path = `${comment.id}`;
 	}
 	store.dispatch(addComment({ ...comment, replies: [] }));
 	if (comment.replies && comment.replies.length > 0) {
