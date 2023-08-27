@@ -1,6 +1,15 @@
 /* eslint-disable no-unused-vars */
 // add new comment
 function addComment(state, action) {
+	// if new comment
+	if (!action.payload.id) {
+		action.payload.id = state.totalComments + 1;
+		action.payload.path = action.payload.parentPath + action.payload.id;
+		action.payload.score = 0;
+		action.payload.createdAt = "now";
+		action.payload.replies = [];
+		delete action.payload.parentPath;
+	}
 	console.log(action);
 	if (action.payload.path.length == 1) {
 		state.comments.push(action.payload);
@@ -18,12 +27,13 @@ function updateComment(state, action) {
 	console.log(action);
 	let content = action.payload.content;
 	let target = findByPath(state.comments, action.payload.path);
-	target.content = content
+	target.content = content;
 }
 //
 //
 // remove old comment
 function removeComment(state, action) {
+	console.log(action);
 	let nodeid = action.payload.path.slice(-1);
 	if (action.payload.path.length == 1) {
 		state.comments = state.comments.filter((ele) => ele.id != nodeid);
