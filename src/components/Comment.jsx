@@ -3,7 +3,15 @@ import { useSelector } from "react-redux";
 import { removeComment } from "../redux/comments.js";
 import { useDispatch } from "react-redux";
 
-function Comment({ score, content, user, createdAt, replies, path }) {
+function Comment({
+	score,
+	content,
+	user,
+	createdAt,
+	replies,
+	path,
+	setReplyingTo,
+}) {
 	const { currentUser } = useSelector((state) => state.userSlice);
 	const dispatch = useDispatch();
 	return (
@@ -32,7 +40,7 @@ function Comment({ score, content, user, createdAt, replies, path }) {
 								<button
 									className="button-secondary delete"
 									onClick={() => {
-										dispatch(removeComment({path}));
+										dispatch(removeComment({ path }));
 									}}
 								>
 									<img
@@ -54,7 +62,12 @@ function Comment({ score, content, user, createdAt, replies, path }) {
 								</button>
 							</>
 						)}
-						<button className="button-secondary">
+						<button
+							className="button-secondary"
+							onClick={() => {
+								setReplyingTo(path, user.username);
+							}}
+						>
 							<img
 								src="/icon-reply.svg"
 								alt="reply"
@@ -72,7 +85,11 @@ function Comment({ score, content, user, createdAt, replies, path }) {
 					<div className="line"></div>
 					<div className="replies">
 						{replies.map((reply) => (
-							<Comment key={reply.id} {...reply} />
+							<Comment
+								key={reply.id}
+								{...reply}
+								setReplyingTo={setReplyingTo}
+							/>
 						))}
 					</div>
 				</div>
