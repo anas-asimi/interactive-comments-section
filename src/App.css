@@ -19,6 +19,7 @@
 *,
 *::after,
 *::before {
+	font-family: "Rubik";
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -27,7 +28,7 @@
 /* body */
 body {
 	background-color: var(--very-light-gray);
-	font-family: "Rubik";
+	font-size: 16px;
 }
 
 /* styles */
@@ -59,12 +60,11 @@ body {
 				padding: 8px;
 				resize: none;
 				font-size: medium;
-				font-family: "Rubik";
 				&:focus {
 					outline: var(--dark-blue) 1px solid;
 				}
 			}
-			.button-group{
+			.button-group {
 				display: flex;
 				flex-direction: column;
 				gap: 16px;
@@ -113,6 +113,19 @@ body {
 						.content {
 							margin-right: 16px;
 						}
+						.content-field {
+							width: 100%;
+							border-radius: 8px;
+							font-size: 16px;
+							line-height: 24px;
+							background-color: transparent;
+							padding: 8px;
+							resize: none;
+							font-size: medium;
+							&:focus {
+								outline: var(--light-gray) 1px solid;
+							}
+						}
 					}
 				}
 				.replies-container {
@@ -146,8 +159,8 @@ body {
 	font-size: large;
 	text-transform: uppercase;
 	cursor: pointer;
-	&:disabled{
-		opacity: 0.5;
+	&:disabled {
+		visibility: hidden;
 		cursor: not-allowed;
 	}
 }
@@ -166,7 +179,7 @@ body {
 	img {
 		margin-right: 8px;
 	}
-	&.delete{
+	&.delete {
 		color: var(--soft-red);
 	}
 }

@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
-import { removeComment } from "../redux/comments.js";
+import { removeComment, updateComment } from "../redux/comments.js";
 import { useDispatch } from "react-redux";
+import { useEffect, useRef, useState } from "react";
 
 function Comment({
 	score,
@@ -12,8 +13,18 @@ function Comment({
 	path,
 	setReplyingTo,
 }) {
+	const text_area = useRef();
+	const [isEditing, setIsEditing] = useState(false);
 	const { currentUser } = useSelector((state) => state.userSlice);
 	const dispatch = useDispatch();
+	useEffect(() => {
+		if (isEditing) {
+			text_area.current.focus();
+			let value = text_area.current.value;
+			text_area.current.value = "";
+			text_area.current.value = value;
+		}
+	});
 	return (
 		<div className="comment-container">
 			<div className="comment">
@@ -35,49 +46,97 @@ function Comment({
 							)}
 						</p>
 						<p className="createdAt">{createdAt}</p>
-						{currentUser.username == user.username && (
+						{isEditing ? (
 							<>
 								<button
-									className="button-secondary delete"
+									className="button-secondary"
 									onClick={() => {
-										dispatch(removeComment({ path }));
+										setIsEditing(false);
+										dispatch(
+											updateComment({
+												path,
+												content:
+													text_area.current.value,
+											})
+										);
+									}}
+								>
+									save
+								</button>
+								<button
+									className="button-secondary"
+									onClick={() => {
+										setIsEditing(false);
+										text_area.current.value = content;
+									}}
+								>
+									ignore
+								</button>
+							</>
+						) : (
+							<>
+								{" "}
+								{currentUser.username == user.username && (
+									<>
+										<button
+											className="button-secondary delete"
+											onClick={() => {
+												dispatch(
+													removeComment({ path })
+												);
+											}}
+										>
+											<img
+												src="/icon-delete.svg"
+												alt="delete"
+												size="12px"
+												width="12px"
+											/>
+											delete
+										</button>
+										<button
+											className="button-secondary"
+											onClick={() => {
+												setIsEditing(true);
+											}}
+										>
+											<img
+												src="/icon-edit.svg"
+												alt="edit"
+												size="12px"
+												width="12px"
+											/>
+											edit
+										</button>
+									</>
+								)}
+								<button
+									className="button-secondary"
+									onClick={() => {
+										setReplyingTo(path, user.username);
 									}}
 								>
 									<img
-										src="/icon-delete.svg"
-										alt="delete"
+										src="/icon-reply.svg"
+										alt="reply"
 										size="12px"
 										width="12px"
 									/>
-									delete
-								</button>
-								<button className="button-secondary">
-									<img
-										src="/icon-edit.svg"
-										alt="edit"
-										size="12px"
-										width="12px"
-									/>
-									edit
+									reply
 								</button>
 							</>
 						)}
-						<button
-							className="button-secondary"
-							onClick={() => {
-								setReplyingTo(path, user.username);
-							}}
-						>
-							<img
-								src="/icon-reply.svg"
-								alt="reply"
-								size="12px"
-								width="12px"
-							/>
-							reply
-						</button>
 					</div>
-					<p className="content">{content}</p>
+					{isEditing || <p className="content">{content}</p>}
+					{currentUser.username == user.username && isEditing && (
+						<textarea
+							ref={text_area}
+							rows={3}
+							className="content-field"
+							name="content-field"
+							defaultValue={content}
+						></textarea>
+					)}
 				</div>
 			</div>
 			{replies?.length > 0 && (
