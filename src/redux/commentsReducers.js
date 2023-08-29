@@ -10,7 +10,6 @@ function addComment(state, action) {
 		action.payload.replies = [];
 		delete action.payload.parentPath;
 	}
-	console.log(action);
 	if (action.payload.path.length == 1) {
 		state.comments.push(action.payload);
 	} else {
@@ -24,7 +23,6 @@ function addComment(state, action) {
 //
 // update old comment
 function updateComment(state, action) {
-	console.log(action);
 	let content = action.payload.content;
 	let target = findByPath(state.comments, action.payload.path);
 	target.content = content;
@@ -33,7 +31,6 @@ function updateComment(state, action) {
 //
 // remove old comment
 function removeComment(state, action) {
-	console.log(action);
 	let nodeid = action.payload.path.slice(-1);
 	if (action.payload.path.length == 1) {
 		state.comments = state.comments.filter((ele) => ele.id != nodeid);
