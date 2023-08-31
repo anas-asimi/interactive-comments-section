@@ -11,6 +11,7 @@ function Comment({
 	createdAt,
 	replies,
 	path,
+	replyingTo,
 	setReplyingTo,
 }) {
 	const text_area = useRef();
@@ -27,8 +28,16 @@ function Comment({
 	});
 	return (
 		<div className="comment-container">
-			<div className="comment">
-				<p className="comment-score">{score}</p>
+			<div
+				className={`comment ${
+					replyingTo?.path == path ? "active" : ""
+				}`}
+			>
+				<p className="comment-score">
+					<img src="/icon-plus.svg" alt="vote up" width={12} />
+					<span>{score}</span>
+					<img src="/icon-minus.svg" alt="vote down" width={12} />
+				</p>
 				<div className="comment-main">
 					<div className="comment-head">
 						<div className="avatar">
@@ -145,6 +154,7 @@ function Comment({
 					<div className="replies">
 						{replies.map((reply) => (
 							<Comment
+								replyingTo={replyingTo}
 								key={reply.id}
 								{...reply}
 								setReplyingTo={setReplyingTo}

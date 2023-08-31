@@ -84,8 +84,21 @@ body {
 					padding: 24px;
 					border-radius: 8px;
 					display: flex;
+					align-items: flex-start;
 					gap: 24px;
-					/* .comment-score {} */
+					&.active{
+						background-color: var(--light-gray);
+					}
+					.comment-score {
+						background-color: var(--very-light-gray);
+						flex-shrink: 0;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						gap: 8px;
+						padding: 16px;
+						border-radius: 12px;
+					}
 					.comment-main {
 						flex: 1;
 						.comment-head {

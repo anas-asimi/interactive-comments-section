@@ -1,8 +1,8 @@
 // add new comment
 function addComment(state, action) {
-	// validate inputs props
 	let { id, content, createdAt, score, user, parentPath, path } =
-		action.payload;
+	action.payload;
+	// validate inputs props
 	if (!(path || typeof parentPath == 'string')) {
 		throw new Error("no path or parentPath property in addComment action");
 	}

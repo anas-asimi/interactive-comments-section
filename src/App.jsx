@@ -43,6 +43,7 @@ function App() {
 					{comments &&
 						comments.map((comment) => (
 							<Comment
+								replyingTo={replyingTo}
 								key={comment.id}
 								{...comment}
 								setReplyingTo={hanldeReplyingTo}
