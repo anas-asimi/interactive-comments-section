@@ -1,6 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
-import { removeComment, updateComment } from "../redux/comments.js";
+import {
+	removeComment,
+	updateComment,
+	voteComment,
+} from "../redux/comments.js";
 import { useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,6 +15,7 @@ function Comment({
 	createdAt,
 	replies,
 	path,
+	isLiked,
 	replyingTo,
 	setReplyingTo,
 }) {
@@ -34,9 +39,35 @@ function Comment({
 				}`}
 			>
 				<p className="comment-score">
-					<img src="/icon-plus.svg" alt="vote up" width={12} />
-					<span>{score}</span>
-					<img src="/icon-minus.svg" alt="vote down" width={12} />
+					<button
+						className="button-secondary"
+						onClick={() => {
+							dispatch(
+								voteComment({
+									action: "vote up",
+									username: user.username,
+									path,
+								})
+							);
+						}}
+					>
+						<img src="/icon-plus.svg" alt="vote up" width={12} />
+					</button>
+					<span>{score + isLiked}</span>
+					<button
+						className="button-secondary"
+						onClick={() => {
+							dispatch(
+								voteComment({
+									action: "vote down",
+									username: user.username,
+									path,
+								})
+							);
+						}}
+					>
+						<img src="/icon-minus.svg" alt="vote down" width={12} />
+					</button>
 				</p>
 				<div className="comment-main">
 					<div className="comment-head">

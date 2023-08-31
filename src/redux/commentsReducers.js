@@ -1,9 +1,9 @@
 // add new comment
 function addComment(state, action) {
 	let { id, content, createdAt, score, user, parentPath, path } =
-	action.payload;
+		action.payload;
 	// validate inputs props
-	if (!(path || typeof parentPath == 'string')) {
+	if (!(path || typeof parentPath == "string")) {
 		throw new Error("no path or parentPath property in addComment action");
 	}
 	if (!content) {
@@ -14,6 +14,7 @@ function addComment(state, action) {
 	score = score ?? 0;
 	createdAt = createdAt ?? "now";
 	let replies = [];
+	let isLiked = false;
 	// add comment to the state
 	if (path.length == 1) {
 		state.comments.push({
@@ -24,6 +25,7 @@ function addComment(state, action) {
 			content,
 			replies,
 			user,
+			isLiked,
 		});
 	} else {
 		let parentPath = path.slice(0, -1);
@@ -36,6 +38,7 @@ function addComment(state, action) {
 			content,
 			replies,
 			user,
+			isLiked,
 		});
 	}
 	state.totalComments++;
@@ -64,11 +67,24 @@ function removeComment(state, action) {
 	}
 	state.totalComments--;
 }
+//
+//
+// remove old comment
+function voteComment(state, action) {
+	let target = findByPath(state.comments, action.payload.path);
+	if (action.payload.action == "vote up") {
+		target.isLiked = true
+	}
+	if (action.payload.action == "vote down") {
+		target.isLiked = false;
+	}
+}
 
 export default {
 	addComment,
 	removeComment,
 	updateComment,
+	voteComment,
 };
 
 //

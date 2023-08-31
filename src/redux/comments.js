@@ -10,8 +10,9 @@ const commentsSlice = createSlice({
 	reducers,
 });
 
-const { addComment, removeComment, updateComment } = commentsSlice.actions;
+const { addComment, removeComment, updateComment, voteComment } =
+	commentsSlice.actions;
 
-export { addComment, removeComment, updateComment };
+export { addComment, removeComment, updateComment, voteComment };
 
 export default commentsSlice;

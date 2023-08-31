@@ -91,13 +91,18 @@ body {
 					}
 					.comment-score {
 						background-color: var(--very-light-gray);
-						flex-shrink: 0;
 						display: flex;
 						flex-direction: column;
 						align-items: center;
 						gap: 8px;
-						padding: 16px;
+						padding: 8px;
 						border-radius: 12px;
+						button {
+							padding: 8px;
+							img{
+								margin: 0;
+							}
+						}
 					}
 					.comment-main {
 						flex: 1;
