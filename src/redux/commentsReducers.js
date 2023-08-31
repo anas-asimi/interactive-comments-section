@@ -1,21 +1,42 @@
-/* eslint-disable no-unused-vars */
 // add new comment
 function addComment(state, action) {
-	// if new comment
-	if (!action.payload.id) {
-		action.payload.id = state.totalComments + 1;
-		action.payload.path = action.payload.parentPath + action.payload.id;
-		action.payload.score = 0;
-		action.payload.createdAt = "now";
-		action.payload.replies = [];
-		delete action.payload.parentPath;
+	// validate inputs props
+	let { id, content, createdAt, score, user, parentPath, path } =
+		action.payload;
+	if (!(path || typeof parentPath == 'string')) {
+		throw new Error("no path or parentPath property in addComment action");
 	}
-	if (action.payload.path.length == 1) {
-		state.comments.push(action.payload);
+	if (!content) {
+		throw new Error("no content in addComment action");
+	}
+	id = id ?? state.totalComments + 1;
+	path = path ?? parentPath + id;
+	score = score ?? 0;
+	createdAt = createdAt ?? "now";
+	let replies = [];
+	// add comment to the state
+	if (path.length == 1) {
+		state.comments.push({
+			id,
+			path,
+			score,
+			createdAt,
+			content,
+			replies,
+			user,
+		});
 	} else {
-		let parentPath = action.payload.path.slice(0, -1);
+		let parentPath = path.slice(0, -1);
 		let targetedComment = findByPath(state.comments, parentPath);
-		targetedComment.replies.push(action.payload);
+		targetedComment.replies.push({
+			id,
+			path,
+			score,
+			createdAt,
+			content,
+			replies,
+			user,
+		});
 	}
 	state.totalComments++;
 }

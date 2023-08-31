@@ -4,11 +4,9 @@ import { addComment, removeComment, updateComment } from "./comments.js";
 
 let comment = {
 	id: 4,
-	content:
-		"I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
+	content: "I agree more with this.",
 	createdAt: "2 days ago",
 	score: 2,
-	replyingTo: "ramsesmiron",
 	user: {
 		image: {
 			png: "/avatars/image-juliusomo.png",
@@ -18,6 +16,7 @@ let comment = {
 	},
 	path: "4",
 };
+
 let comment_update = {
 	content: "new content",
 	path: "4",
@@ -30,9 +29,16 @@ describe("add new comments", () => {
 
 	store.dispatch(addComment(comment));
 	commentsSlice = store.getState().commentsSlice;
+	let commentInStore = commentsSlice.comments[0];
 
 	test("comment is added", () => {
-		expect(commentsSlice.comments[0]).toBe(comment);
+		expect(commentInStore.id).toBe(comment.id);
+		expect(commentInStore.path).toBe(comment.path);
+		expect(commentInStore.content).toBe(comment.content);
+		expect(commentInStore.createdAt).toBe(comment.createdAt);
+		expect(commentInStore.score).toBe(comment.score);
+		expect(commentInStore.user.username).toBe(comment.user.username);
+		expect(commentsSlice.comments.length).toBe(1);
 	});
 	test("totalComments is incremented", () => {
 		expect(commentsSlice.totalComments).toBe(1);
@@ -41,13 +47,14 @@ describe("add new comments", () => {
 
 describe("update old comment", () => {
 	let { commentsSlice } = store.getState();
-	expect(commentsSlice.comments[0]).toBe(comment);
+	expect(commentsSlice.comments[0].content).toBe(comment.content);
 	expect(commentsSlice.totalComments).toBe(1);
 
 	store.dispatch(updateComment(comment_update));
 	commentsSlice = store.getState().commentsSlice;
 	test("comment is updated", () => {
 		expect(commentsSlice.comments[0].content).toBe(comment_update.content);
+		expect(commentsSlice.totalComments).toBe(1);
 	});
 });
 
