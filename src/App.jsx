@@ -25,6 +25,7 @@ function App() {
 				})
 			);
 			commentField.current.value = "";
+			setReplyingTo();
 		} else {
 			console.log("empty comment !!");
 		}
