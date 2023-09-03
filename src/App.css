@@ -86,7 +86,7 @@ body {
 					display: flex;
 					align-items: flex-start;
 					gap: 24px;
-					&.active{
+					&.active {
 						background-color: var(--light-gray);
 					}
 					.comment-score {
@@ -99,7 +99,7 @@ body {
 						border-radius: 12px;
 						button {
 							padding: 8px;
-							img{
+							img {
 								margin: 0;
 							}
 						}
@@ -111,21 +111,27 @@ body {
 							align-items: center;
 							gap: 16px;
 							margin-bottom: 16px;
-							.username {
-								font-weight: 700;
-								color: var(--dark-blue);
-								.you {
-									font-size: small;
-									border-radius: 1px;
-									margin-left: 8px;
-									color: var(--white);
-									padding: 1px 2px;
-									background-color: var(--moderate-blue);
-								}
-							}
-							.createdAt {
+							.comment-head-info {
+								display: flex;
+								column-gap: 16px;
+								row-gap: 2px;
+								flex-wrap: wrap;
 								margin-right: auto;
-								color: var(--grayish-blue);
+								.username {
+									font-weight: 700;
+									color: var(--dark-blue);
+									.you {
+										font-size: small;
+										border-radius: 1px;
+										margin-left: 8px;
+										color: var(--white);
+										padding: 1px 2px;
+										background-color: var(--moderate-blue);
+									}
+								}
+								.createdAt {
+									color: var(--grayish-blue);
+								}
 							}
 						}
 						.content {

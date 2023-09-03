@@ -79,13 +79,15 @@ function Comment({
 								alt={user.username}
 							/>
 						</div>
-						<p className="username">
-							{user.username}
-							{currentUser.username == user.username && (
-								<span className="you">you</span>
-							)}
-						</p>
-						<p className="createdAt">{createdAt}</p>
+						<div className="comment-head-info">
+							<span className="username">
+								{user.username}
+								{currentUser.username == user.username && (
+									<span className="you">you</span>
+								)}
+							</span>
+							<span className="createdAt">{createdAt}</span>
+						</div>
 						{isEditing ? (
 							<>
 								<button
